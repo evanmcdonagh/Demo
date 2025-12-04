@@ -140,7 +140,7 @@
   - Remove all business logic, models, and endpoint definitions from main.py
   - _Requirements: 3.4, 8.1_
 
-- [-] 8. Checkpoint - Verify all endpoints work identically
+- [x] 8. Checkpoint - Verify all endpoints work identically
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ]* 9. Write property test for API behavioral equivalence
@@ -154,5 +154,5 @@
   - Compare behavior with original implementation where possible
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 8.1, 8.2, 8.3, 8.4, 8.5_
 
-- [ ] 11. Final checkpoint - Ensure all tests pass
+- [x] 11. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
