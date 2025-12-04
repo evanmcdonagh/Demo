@@ -1,6 +1,6 @@
 # Implementation Plan
 
-- [ ] 1. Update DynamoDB table schema to composite key pattern (PK/SK)
+- [x] 1. Update DynamoDB table schema to composite key pattern (PK/SK)
   - Update CDK infrastructure to define table with PK and SK
   - Add GSI1 for reverse lookups (SK as PK, PK as SK)
   - Deploy infrastructure changes
@@ -13,7 +13,7 @@
   - Verify migration and clean up old records
   - _Requirements: 6.6_
 
-- [ ] 3. Update event CRUD operations for composite key schema
+- [x] 3. Update event CRUD operations for composite key schema
   - Update create_event to use PK/SK pattern
   - Update get_event to query with PK/SK
   - Update update_event to use PK/SK
@@ -25,24 +25,24 @@
   - **Property 4: Event attributes round trip**
   - **Validates: Requirements 2.1, 2.2, 2.3**
 
-- [ ] 4. Implement user management
-- [ ] 4.1 Create user data model and validation
+- [x] 4. Implement user management
+- [x] 4.1 Create user data model and validation
   - Define User Pydantic model with userId and name validation
   - Implement validation for non-empty fields
   - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] 4.2 Implement create_user function
+- [x] 4.2 Implement create_user function
   - Write function to create user in DynamoDB with PK/SK pattern
   - Add duplicate userId check with conditional write
   - Handle DynamoDB reserved keyword "name"
   - _Requirements: 1.1, 1.4, 6.2_
 
-- [ ] 4.3 Implement get_user function
+- [x] 4.3 Implement get_user function
   - Write function to retrieve user by userId
   - Handle user not found case
   - _Requirements: 1.1_
 
-- [ ] 4.4 Create user API endpoints
+- [x] 4.4 Create user API endpoints
   - Implement POST /users endpoint
   - Implement GET /users/{userId} endpoint
   - Add error handling for validation and conflicts
@@ -61,18 +61,18 @@
   - **Property 3: Duplicate user prevention**
   - **Validates: Requirements 1.4**
 
-- [ ] 5. Implement registration logic with capacity enforcement
-- [ ] 5.1 Create registration data models
+- [x] 5. Implement registration logic with capacity enforcement
+- [x] 5.1 Create registration data models
   - Define Registration and RegistrationRequest Pydantic models
   - Add validation for userId and eventId
   - _Requirements: 3.1_
 
-- [ ] 5.2 Implement check_event_capacity function
+- [x] 5.2 Implement check_event_capacity function
   - Write function to check available capacity
   - Use consistent reads to avoid stale data
   - _Requirements: 2.4, 3.1_
 
-- [ ] 5.3 Implement register_user_for_event function
+- [x] 5.3 Implement register_user_for_event function
   - Check if user and event exist
   - Check if user already registered
   - Check event capacity
@@ -82,7 +82,7 @@
   - Handle full event with waitlist (add to waitlist)
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 6.4_
 
-- [ ] 5.4 Create registration API endpoint
+- [x] 5.4 Create registration API endpoint
   - Implement POST /registrations endpoint
   - Add error handling for all scenarios
   - Update API Gateway routes in CDK
@@ -100,13 +100,13 @@
   - **Property 8: Duplicate registration prevention**
   - **Validates: Requirements 3.4**
 
-- [ ] 6. Implement waitlist functionality
-- [ ] 6.1 Implement add_to_waitlist function
+- [x] 6. Implement waitlist functionality
+- [x] 6.1 Implement add_to_waitlist function
   - Create waitlist entry with PK/SK pattern (WAITLIST#{timestamp}#{userId})
   - Store waitlist position and timestamp
   - _Requirements: 3.3, 6.5_
 
-- [ ] 6.2 Implement promote_from_waitlist function
+- [x] 6.2 Implement promote_from_waitlist function
   - Query first waitlist entry (sorted by SK)
   - Convert waitlist entry to registration
   - Remove from waitlist
@@ -121,15 +121,15 @@
   - **Property 10: Waitlist promotion on unregistration**
   - **Validates: Requirements 4.2**
 
-- [ ] 7. Implement unregistration logic
-- [ ] 7.1 Implement unregister_user_from_event function
+- [x] 7. Implement unregistration logic
+- [x] 7.1 Implement unregister_user_from_event function
   - Check if user is registered for event
   - Remove registration record
   - Update event currentRegistrations count atomically
   - Call promote_from_waitlist if waitlist exists
   - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-- [ ] 7.2 Create unregistration API endpoint
+- [x] 7.2 Create unregistration API endpoint
   - Implement DELETE /registrations/{userId}/{eventId} endpoint
   - Add error handling for not found cases
   - Update API Gateway routes in CDK
@@ -139,15 +139,15 @@
   - **Property 9: Unregistration removes record and increments capacity**
   - **Validates: Requirements 4.1**
 
-- [ ] 8. Implement user events query
-- [ ] 8.1 Implement get_user_events function
+- [x] 8. Implement user events query
+- [x] 8.1 Implement get_user_events function
   - Query all registrations for user (PK: USER#{userId})
   - Filter for registrationStatus = "registered"
   - Fetch event details for each registration
   - Return list of events
   - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 8.2 Create user events API endpoint
+- [x] 8.2 Create user events API endpoint
   - Implement GET /users/{userId}/events endpoint
   - Handle empty results gracefully
   - Update API Gateway routes in CDK
@@ -157,7 +157,7 @@
   - **Property 11: User events query returns only registered events**
   - **Validates: Requirements 5.1, 5.2**
 
-- [ ] 9. Update Lambda permissions and deploy
+- [x] 9. Update Lambda permissions and deploy
   - Update Lambda IAM role with permissions for all DynamoDB operations
   - Update Lambda environment variables if needed
   - Deploy updated infrastructure and application
