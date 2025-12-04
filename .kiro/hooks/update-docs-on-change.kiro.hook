@@ -1,0 +1,14 @@
+{
+  "name": "Update Docs on Source Change",
+  "description": "Automatically updates API documentation when backend code files are modified",
+  "version": "1.0.0",
+  "trigger": {
+    "type": "fileEdited",
+    "filePattern": "backend/**/*.py"
+  },
+  "action": {
+    "type": "sendMessage",
+    "message": "The file {{filePath}} was just edited. Please review the changes and update the following documentation files if needed:\n\n1. REGISTRATION_API.md - Update API endpoint documentation if endpoints were added/modified/removed\n2. README.md - Update if major features were added or changed\n3. backend/docs/index.html - Update HTML documentation if API structure changed\n\nFocus on:\n- New or modified endpoints\n- Changed request/response models\n- Updated error handling\n- New features or capabilities\n\nOnly update documentation that is actually affected by the code changes. If no documentation updates are needed, just confirm that everything is up to date."
+  },
+  "enabled": true
+}
