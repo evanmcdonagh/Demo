@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        .get { background: #61affe; color: white; }
+        .post { background: #49cc90; color: white; }
+        .put { background: #fca130; color: white; }
+        .delete { background: #f93e3e; color: white; }
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: #333;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .param-table th,
+        .param-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .param-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        .param-table tr:hover {
+            background: #f5f5f5;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .required { background: #f93e3e; color: white; }
+        .optional { background: #fca130; color: white; }
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📅 Events API Documentation</h1>
+            <p>RESTful API for managing events with DynamoDB backend</p>
+            <p style="margin-top: 10px; font-size: 1em;">
+                <strong>Base URL:</strong> <code style="background: rgba(255,255,255,0.2); padding: 5px 10px;">https://knknpcjjz7.execute-api.us-west-2.amazonaws.com/prod</code>
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>Overview</h2>
+            <p>The Events API provides a complete CRUD interface for managing events. Built with FastAPI and deployed on AWS Lambda with API Gateway and DynamoDB.</p>
+            
+            <h3>Key Features</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>✅ Full CRUD operations for events</li>
+                <li>✅ DynamoDB reserved keywords handled properly</li>
+                <li>✅ Client-provided event IDs supported</li>
+                <li>✅ Status-based filtering</li>
+                <li>✅ CORS enabled for web access</li>
+                <li>✅ Comprehensive input validation</li>
+                <li>✅ Automatic timestamps (createdAt, updatedAt)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Event Schema</h2>
+            <table class="param-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>eventId</code></td>
+                        <td>string (UUID)</td>
+                        <td><span class="badge optional">Optional</span></td>
+                        <td>Unique identifier (auto-generated if not provided)</td>
+                    </tr>
+                    <tr>
+                        <td><code>title</code></td>
+                        <td>string (1-200)</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>Event title</td>
+                    </tr>
+                    <tr>
+                        <td><code>description</code></td>
+                        <td>string (1-2000)</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>Event description</td>
+                    </tr>
+                    <tr>
+                        <td><code>date</code></td>
+                        <td>string (ISO)</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>Event date (YYYY-MM-DD format)</td>
+                    </tr>
+                    <tr>
+                        <td><code>location</code></td>
+                        <td>string (1-300)</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>Event location</td>
+                    </tr>
+                    <tr>
+                        <td><code>capacity</code></td>
+                        <td>integer (1-100000)</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>Maximum attendees</td>
+                    </tr>
+                    <tr>
+                        <td><code>organizer</code></td>
+                        <td>string (1-200)</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>Event organizer name</td>
+                    </tr>
+                    <tr>
+                        <td><code>status</code></td>
+                        <td>enum</td>
+                        <td><span class="badge required">Required</span></td>
+                        <td>scheduled | ongoing | completed | cancelled | active</td>
+                    </tr>
+                    <tr>
+                        <td><code>createdAt</code></td>
+                        <td>string (ISO)</td>
+                        <td><span class="badge optional">Auto</span></td>
+                        <td>Creation timestamp (auto-generated)</td>
+                    </tr>
+                    <tr>
+                        <td><code>updatedAt</code></td>
+                        <td>string (ISO)</td>
+                        <td><span class="badge optional">Auto</span></td>
+                        <td>Last update timestamp (auto-updated)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>API Endpoints</h2>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="path">/</span>
+                </div>
+                <h3>Root Endpoint</h3>
+                <p>Returns API information and version.</p>
+                <h4>Response (200 OK)</h4>
+                <pre><code>{
+  "message": "Events API is running",
+  "version": "1.0.0"
+}</code></pre>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="path">/health</span>
+                </div>
+                <h3>Health Check</h3>
+                <p>Returns API health status.</p>
+                <h4>Response (200 OK)</h4>
+                <pre><code>{
+  "status": "healthy"
+}</code></pre>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="path">/events</span>
+                </div>
+                <h3>List All Events</h3>
+                <p>Retrieves all events, optionally filtered by status.</p>
+                <h4>Query Parameters</h4>
+                <table class="param-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>status</code></td>
+                        <td>string</td>
+                        <td><span class="badge optional">Optional</span></td>
+                        <td>Filter by event status</td>
+                    </tr>
+                </table>
+                <h4>Example Request</h4>
+                <pre><code>curl https://YOUR-API-URL/events?status=active</code></pre>
+                <h4>Response (200 OK)</h4>
+                <pre><code>[
+  {
+    "eventId": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Tech Conference 2025",
+    "description": "Annual technology conference",
+    "date": "2025-06-15",
+    "location": "San Francisco, CA",
+    "capacity": 500,
+    "organizer": "Tech Corp",
+    "status": "active",
+    "createdAt": "2025-12-04T01:00:00.000000",
+    "updatedAt": "2025-12-04T01:00:00.000000"
+  }
+]</code></pre>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method post">POST</span>
+                    <span class="path">/events</span>
+                </div>
+                <h3>Create Event</h3>
+                <p>Creates a new event. Event ID can be provided or will be auto-generated.</p>
+                <h4>Request Body</h4>
+                <pre><code>{
+  "eventId": "api-test-event-456",  // Optional
+  "title": "API Gateway Test Event",
+  "description": "Testing API Gateway integration",
+  "date": "2024-12-15",
+  "location": "API Test Location",
+  "capacity": 200,
+  "organizer": "API Test Organizer",
+  "status": "active"
+}</code></pre>
+                <h4>Response (201 Created)</h4>
+                <pre><code>{
+  "eventId": "api-test-event-456",
+  "title": "API Gateway Test Event",
+  "description": "Testing API Gateway integration",
+  "date": "2024-12-15",
+  "location": "API Test Location",
+  "capacity": 200,
+  "organizer": "API Test Organizer",
+  "status": "active",
+  "createdAt": "2025-12-04T01:24:03.184136",
+  "updatedAt": "2025-12-04T01:24:03.184136"
+}</code></pre>
+                <div class="note">
+                    <strong>Note:</strong> If <code>eventId</code> is not provided, a UUID will be automatically generated.
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="path">/events/{event_id}</span>
+                </div>
+                <h3>Get Event by ID</h3>
+                <p>Retrieves a specific event by its ID.</p>
+                <h4>Path Parameters</h4>
+                <table class="param-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>event_id</code></td>
+                        <td>string</td>
+                        <td>The unique event identifier</td>
+                    </tr>
+                </table>
+                <h4>Example Request</h4>
+                <pre><code>curl https://YOUR-API-URL/events/api-test-event-456</code></pre>
+                <h4>Response (200 OK)</h4>
+                <pre><code>{
+  "eventId": "api-test-event-456",
+  "title": "API Gateway Test Event",
+  "description": "Testing API Gateway integration",
+  "date": "2024-12-15",
+  "location": "API Test Location",
+  "capacity": 200,
+  "organizer": "API Test Organizer",
+  "status": "active",
+  "createdAt": "2025-12-04T01:24:03.184136",
+  "updatedAt": "2025-12-04T01:24:03.184136"
+}</code></pre>
+                <h4>Response (404 Not Found)</h4>
+                <pre><code>{
+  "detail": "Event with ID {event_id} not found"
+}</code></pre>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method put">PUT</span>
+                    <span class="path">/events/{event_id}</span>
+                </div>
+                <h3>Update Event</h3>
+                <p>Updates an existing event. Only provided fields will be updated (partial update).</p>
+                <h4>Path Parameters</h4>
+                <table class="param-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>event_id</code></td>
+                        <td>string</td>
+                        <td>The unique event identifier</td>
+                    </tr>
+                </table>
+                <h4>Request Body (all fields optional)</h4>
+                <pre><code>{
+  "title": "Updated API Gateway Test Event",
+  "capacity": 250
+}</code></pre>
+                <h4>Response (200 OK)</h4>
+                <pre><code>{
+  "eventId": "api-test-event-456",
+  "title": "Updated API Gateway Test Event",
+  "description": "Testing API Gateway integration",
+  "date": "2024-12-15",
+  "location": "API Test Location",
+  "capacity": 250,
+  "organizer": "API Test Organizer",
+  "status": "active",
+  "createdAt": "2025-12-04T01:24:03.184136",
+  "updatedAt": "2025-12-04T01:24:03.745092"
+}</code></pre>
+                <div class="success">
+                    <strong>✓ DynamoDB Reserved Keywords:</strong> This API properly handles DynamoDB reserved keywords like <code>status</code>, <code>capacity</code>, <code>date</code>, and <code>location</code> using expression attribute names.
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/events/{event_id}</span>
+                </div>
+                <h3>Delete Event</h3>
+                <p>Deletes an event by its ID.</p>
+                <h4>Path Parameters</h4>
+                <table class="param-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>event_id</code></td>
+                        <td>string</td>
+                        <td>The unique event identifier</td>
+                    </tr>
+                </table>
+                <h4>Example Request</h4>
+                <pre><code>curl -X DELETE https://YOUR-API-URL/events/api-test-event-456</code></pre>
+                <h4>Response (204 No Content)</h4>
+                <p>No response body. Event successfully deleted.</p>
+                <h4>Response (404 Not Found)</h4>
+                <pre><code>{
+  "detail": "Event with ID {event_id} not found"
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Error Responses</h2>
+            
+            <h3>400 Bad Request</h3>
+            <p>Invalid input data or validation error.</p>
+            <pre><code>{
+  "detail": "No fields to update"
+}</code></pre>
+
+            <h3>404 Not Found</h3>
+            <p>Resource not found.</p>
+            <pre><code>{
+  "detail": "Event with ID {event_id} not found"
+}</code></pre>
+
+            <h3>422 Unprocessable Entity</h3>
+            <p>Validation error from Pydantic.</p>
+            <pre><code>{
+  "detail": [
+    {
+      "loc": ["body", "capacity"],
+      "msg": "ensure this value is greater than 0",
+      "type": "value_error"
+    }
+  ]
+}</code></pre>
+
+            <h3>500 Internal Server Error</h3>
+            <p>Server error.</p>
+            <pre><code>{
+  "detail": "Failed to create event: {error message}"
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Interactive Documentation</h2>
+            <p>FastAPI provides automatic interactive API documentation:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><strong>Swagger UI:</strong> <a href="https://knknpcjjz7.execute-api.us-west-2.amazonaws.com/prod/docs" target="_blank">https://YOUR-API-URL/docs</a></li>
+                <li><strong>ReDoc:</strong> <a href="https://knknpcjjz7.execute-api.us-west-2.amazonaws.com/prod/redoc" target="_blank">https://YOUR-API-URL/redoc</a></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Rate Limits</h2>
+            <p>Default API Gateway limits:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><strong>Rate:</strong> 100 requests per second</li>
+                <li><strong>Burst:</strong> 200 requests</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>CORS</h2>
+            <p>CORS is enabled for all origins (<code>*</code>). For production, update the <code>allow_origins</code> in the infrastructure code to specific domains.</p>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 40px 20px; color: #666;">
+        <p>Events API v1.0.0 | Built with FastAPI, AWS Lambda, API Gateway, and DynamoDB</p>
+    </footer>
+</body>
+</html>

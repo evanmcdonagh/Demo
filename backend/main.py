@@ -10,10 +10,8 @@ from boto3.dynamodb.conditions import Attr
 from botocore.exceptions import ClientError
 import uuid
 
-# Initialize FastAPI app
 app = FastAPI(title="Events API", version="1.0.0")
 
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,12 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# DynamoDB setup
 dynamodb = boto3.resource('dynamodb')
 table_name = os.environ.get('EVENTS_TABLE_NAME', 'EventsTable')
 table = dynamodb.Table(table_name)
 
-# Pydantic models
 class EventBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=2000)
