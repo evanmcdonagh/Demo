@@ -1,5 +1,10 @@
 {
   "mcpServers": {
+    "aws-knowledge-mcp-server": {
+      "url": "https://knowledge-mcp.global.api.aws",
+      "type": "http",
+      "disabled": false
+    },
     "awslabs.cdk-mcp-server": {
       "command": "uvx",
       "args": ["awslabs.cdk-mcp-server@latest"],
@@ -8,11 +13,6 @@
       },
       "disabled": false,
       "autoApprove": []
-    },
-    "aws-knowledge-mcp-server": {
-      "url": "https://knowledge-mcp.global.api.aws",
-      "type": "http",
-      "disabled": false
     }
   }
 }
