@@ -1,0 +1,664 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0034BDB5897A31D79E593AE6 /* TeamDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537052243EE41D8E83D27C83 /* TeamDetailView.swift */; };
+		09FEB12D2882ECFE71B1F86C /* PitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B915E46D9508A043F8C25AA /* PitchView.swift */; };
+		136853F35D0B16F8790DD68E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB064DE96D5F65E5C88A1D /* Game.swift */; };
+		1E0E6F84D5537A92A2126443 /* Date+GameClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC42BAA83D7D347E5758AB4 /* Date+GameClock.swift */; };
+		2628F70499471A544C0D23B0 /* ActiveRosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167D5CA9D4CEAC54FED1007B /* ActiveRosterView.swift */; };
+		28D970D2B48214CC40923CAE /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E4CE4242DDD29C8E4BB679 /* PlayerListView.swift */; };
+		303D866877188C5C78341E77 /* SocialShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966741CEC272F0DDF1D00CD2 /* SocialShareManager.swift */; };
+		3748229EE1D10141ED70A0EC /* ShareExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750F56A1C88655C4FD1C516B /* ShareExporter.swift */; };
+		39A889A06CAB3B3B2B5D9DE3 /* GameSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1600EA4B37FCDCAF05CBE171 /* GameSummaryView.swift */; };
+		3C4F65F9B3A9728B94DA87C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 510BFA3155E22D296B2003E1 /* Assets.xcassets */; };
+		3DBD03056E7483501179D81D /* PlayerGameStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B47A47E341881A4E3425EF1 /* PlayerGameStat.swift */; };
+		43742BC42B0BEDC37455566B /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBF6FEB1267B4132450F515 /* ClockView.swift */; };
+		449E73734C2F4DD68EF0CA72 /* LiveGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275ACF3D6097D2A0FE4FC3A /* LiveGameViewModel.swift */; };
+		461A2DB1C9FAA335E6A400C5 /* GaelicTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B0121FF092E799EFB14DBA /* GaelicTrackerApp.swift */; };
+		4F5698A4CA980724789F2DBD /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11D8A7B9B371BA879E2752 /* GameViewModel.swift */; };
+		5275E7CBDB7ACB5BF1212CEF /* TeamImportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBE0387E3679E6D683E551D /* TeamImportSheet.swift */; };
+		5D8B3A3905637E0AE70F246C /* PlayerFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A86CFB53E049D176A821E4 /* PlayerFormView.swift */; };
+		5FF0EE8D6AC1C2A0F0424C4E /* GameShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A49120A12C41B137490F5E1 /* GameShareCard.swift */; };
+		658ECD6B25B61EF5E0B944C9 /* CSVTeamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51E0AE4777B16B78426FEC4 /* CSVTeamParser.swift */; };
+		6D9D0306771AE9A1467E412A /* Substitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5FA41260CD1218E9AFD96D /* Substitution.swift */; };
+		7396BAA1A82D062FC6FDF0B7 /* SocialShareButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5178D63AC825D6AA95BB8110 /* SocialShareButtons.swift */; };
+		763EBB49148218833AB6DF59 /* LiveGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB3B42990B0B9E4182F8B1B /* LiveGameView.swift */; };
+		7DEFE69BEE9545BD9B3C85B4 /* EventLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049E636178B1B47E776ED802 /* EventLogView.swift */; };
+		828C91DDBC6648ABB3933408 /* CardBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E394D3C7C59F0AE5BE8BC10 /* CardBadgeView.swift */; };
+		85C4154F84CE6616D52EAB13 /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E627545FAAFC99045ED65C85 /* ScoreboardView.swift */; };
+		8DF2FA14E623D59161EFA809 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33875BD8C48C6A6BA3FE9D9 /* EmptyStateView.swift */; };
+		9501F7E7F45153864D58AF39 /* GameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5C6E590202B7C8135AAEC /* GameSetupView.swift */; };
+		96990E1F099A216C6F211179 /* ScoreCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B815153A848E9EFC934FE9 /* ScoreCalculationTests.swift */; };
+		9D711EF0EAF003762198FEB3 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8F659066117CF8C6BE221 /* Enums.swift */; };
+		A1B8825C84C3B83686CB7AD6 /* ScoreFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25802F216E5A7CF9BF5A331 /* ScoreFormatView.swift */; };
+		A31EFE18535797CA0D5A66A3 /* QuickNumberedTeamSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0440B2356656E18F585F8AD /* QuickNumberedTeamSheet.swift */; };
+		A34B33004639E5E690276AEA /* TeamFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF404598AC70317E737951A6 /* TeamFormView.swift */; };
+		A6D54B91E019D87E585E613C /* TeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA86604E80DF3B94FD168D5 /* TeamViewModel.swift */; };
+		AC41FA84E6476807B6CCBC9F /* GamesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6F8EB53F15514E9C128CF /* GamesListView.swift */; };
+		B59D61BC08761011A867567D /* LocationPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3983F0E49171A4EFA38BE4BB /* LocationPickerSheet.swift */; };
+		BB22A79FF580EFFF9381D3F0 /* ScoreLegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF89A0C16066F482A1FC1BF /* ScoreLegendView.swift */; };
+		C1F9368AC21B24F8BD1A8B40 /* PitchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC0B84B8317A794FAF34599 /* PitchShape.swift */; };
+		C237D71EB7A6101265D8092A /* TeamsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B89DF570EAA55C1DC91EE52 /* TeamsListView.swift */; };
+		DD1099DEA83B115F3101343B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1EABECAC24B654F858BBFC /* Team.swift */; };
+		DF8B464462B2956F1B8C3C66 /* Color+Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F3C7247B8C95FCCA4D53A /* Color+Team.swift */; };
+		E24C4DD142634D296BA95727 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD504B2DA13D6C4BF4D7C81A /* Player.swift */; };
+		E2657113D0D8F5738613FBA2 /* GameEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B50B10675662A18D7F3DC2 /* GameEvent.swift */; };
+		E6B2D3BF4577A596EC24EAB6 /* SubstitutionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DDC1DC455D2F07B1B8A3B7 /* SubstitutionSheetView.swift */; };
+		EAF34B5E52E490FDE1A1C0C1 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01147EA6F4B42A908F35DB8A /* PreviewData.swift */; };
+		FA8BE83E8FFBED1FFC1D2499 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD5FAF16DC43A7A8BEA20E1 /* ContentView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1C83608750DFFFBA204E6AF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAA19E2FA4FE911FF32E2333 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E58DA90D11377FB50C613107;
+			remoteInfo = GaelicTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01147EA6F4B42A908F35DB8A /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
+		049E636178B1B47E776ED802 /* EventLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLogView.swift; sourceTree = "<group>"; };
+		04C6F8EB53F15514E9C128CF /* GamesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesListView.swift; sourceTree = "<group>"; };
+		0A49120A12C41B137490F5E1 /* GameShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameShareCard.swift; sourceTree = "<group>"; };
+		0B47A47E341881A4E3425EF1 /* PlayerGameStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGameStat.swift; sourceTree = "<group>"; };
+		0EA86604E80DF3B94FD168D5 /* TeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewModel.swift; sourceTree = "<group>"; };
+		0F5FA41260CD1218E9AFD96D /* Substitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Substitution.swift; sourceTree = "<group>"; };
+		13B0121FF092E799EFB14DBA /* GaelicTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaelicTrackerApp.swift; sourceTree = "<group>"; };
+		1600EA4B37FCDCAF05CBE171 /* GameSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSummaryView.swift; sourceTree = "<group>"; };
+		167D5CA9D4CEAC54FED1007B /* ActiveRosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRosterView.swift; sourceTree = "<group>"; };
+		16A5C6E590202B7C8135AAEC /* GameSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetupView.swift; sourceTree = "<group>"; };
+		1B89DF570EAA55C1DC91EE52 /* TeamsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsListView.swift; sourceTree = "<group>"; };
+		21EB064DE96D5F65E5C88A1D /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		2AA41ED07186A323E8C4DB32 /* GaelicTrackerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GaelicTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EC42BAA83D7D347E5758AB4 /* Date+GameClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+GameClock.swift"; sourceTree = "<group>"; };
+		2FB3B42990B0B9E4182F8B1B /* LiveGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGameView.swift; sourceTree = "<group>"; };
+		3275ACF3D6097D2A0FE4FC3A /* LiveGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGameViewModel.swift; sourceTree = "<group>"; };
+		3983F0E49171A4EFA38BE4BB /* LocationPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerSheet.swift; sourceTree = "<group>"; };
+		3B915E46D9508A043F8C25AA /* PitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchView.swift; sourceTree = "<group>"; };
+		411A779560C0448291C0211A /* GaelicTracker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GaelicTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EBF6FEB1267B4132450F515 /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
+		4FC0B84B8317A794FAF34599 /* PitchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchShape.swift; sourceTree = "<group>"; };
+		510BFA3155E22D296B2003E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5178D63AC825D6AA95BB8110 /* SocialShareButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialShareButtons.swift; sourceTree = "<group>"; };
+		537052243EE41D8E83D27C83 /* TeamDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailView.swift; sourceTree = "<group>"; };
+		750F56A1C88655C4FD1C516B /* ShareExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExporter.swift; sourceTree = "<group>"; };
+		7E394D3C7C59F0AE5BE8BC10 /* CardBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBadgeView.swift; sourceTree = "<group>"; };
+		7EBE0387E3679E6D683E551D /* TeamImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamImportSheet.swift; sourceTree = "<group>"; };
+		7F11D8A7B9B371BA879E2752 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		966741CEC272F0DDF1D00CD2 /* SocialShareManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialShareManager.swift; sourceTree = "<group>"; };
+		A25802F216E5A7CF9BF5A331 /* ScoreFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreFormatView.swift; sourceTree = "<group>"; };
+		A33875BD8C48C6A6BA3FE9D9 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		A6DDC1DC455D2F07B1B8A3B7 /* SubstitutionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubstitutionSheetView.swift; sourceTree = "<group>"; };
+		B5A86CFB53E049D176A821E4 /* PlayerFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFormView.swift; sourceTree = "<group>"; };
+		BCD5FAF16DC43A7A8BEA20E1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BD504B2DA13D6C4BF4D7C81A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		CBF6341C3F60E9B20ABDCD4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CFD8F659066117CF8C6BE221 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		D51E0AE4777B16B78426FEC4 /* CSVTeamParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVTeamParser.swift; sourceTree = "<group>"; };
+		D82F3C7247B8C95FCCA4D53A /* Color+Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Team.swift"; sourceTree = "<group>"; };
+		E627545FAAFC99045ED65C85 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
+		E8E4CE4242DDD29C8E4BB679 /* PlayerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
+		EAF89A0C16066F482A1FC1BF /* ScoreLegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreLegendView.swift; sourceTree = "<group>"; };
+		EC1EABECAC24B654F858BBFC /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		EF404598AC70317E737951A6 /* TeamFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamFormView.swift; sourceTree = "<group>"; };
+		F0440B2356656E18F585F8AD /* QuickNumberedTeamSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickNumberedTeamSheet.swift; sourceTree = "<group>"; };
+		F2B50B10675662A18D7F3DC2 /* GameEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvent.swift; sourceTree = "<group>"; };
+		F7B815153A848E9EFC934FE9 /* ScoreCalculationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculationTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		03A733E73776645ACE15C08B /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				16A5C6E590202B7C8135AAEC /* GameSetupView.swift */,
+				04C6F8EB53F15514E9C128CF /* GamesListView.swift */,
+				1600EA4B37FCDCAF05CBE171 /* GameSummaryView.swift */,
+			);
+			path = Games;
+			sourceTree = "<group>";
+		};
+		0E269F2DEF74B485B2BB2B81 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D82F3C7247B8C95FCCA4D53A /* Color+Team.swift */,
+				2EC42BAA83D7D347E5758AB4 /* Date+GameClock.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		119301BDBACBF409D6872B1C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				01147EA6F4B42A908F35DB8A /* PreviewData.swift */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		29F11B952B82108C34A4B133 /* Live */ = {
+			isa = PBXGroup;
+			children = (
+				167D5CA9D4CEAC54FED1007B /* ActiveRosterView.swift */,
+				4EBF6FEB1267B4132450F515 /* ClockView.swift */,
+				049E636178B1B47E776ED802 /* EventLogView.swift */,
+				2FB3B42990B0B9E4182F8B1B /* LiveGameView.swift */,
+				E627545FAAFC99045ED65C85 /* ScoreboardView.swift */,
+				A6DDC1DC455D2F07B1B8A3B7 /* SubstitutionSheetView.swift */,
+			);
+			path = Live;
+			sourceTree = "<group>";
+		};
+		3DBD7FE72B97568187491B00 /* GaelicTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				F7B815153A848E9EFC934FE9 /* ScoreCalculationTests.swift */,
+			);
+			path = GaelicTrackerTests;
+			sourceTree = "<group>";
+		};
+		43E52A1E6BD01DA1FCDB5FD5 /* Teams */ = {
+			isa = PBXGroup;
+			children = (
+				B5A86CFB53E049D176A821E4 /* PlayerFormView.swift */,
+				E8E4CE4242DDD29C8E4BB679 /* PlayerListView.swift */,
+				F0440B2356656E18F585F8AD /* QuickNumberedTeamSheet.swift */,
+				537052243EE41D8E83D27C83 /* TeamDetailView.swift */,
+				EF404598AC70317E737951A6 /* TeamFormView.swift */,
+				7EBE0387E3679E6D683E551D /* TeamImportSheet.swift */,
+				1B89DF570EAA55C1DC91EE52 /* TeamsListView.swift */,
+			);
+			path = Teams;
+			sourceTree = "<group>";
+		};
+		455C195380F9EB67459E4AEA /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				0A49120A12C41B137490F5E1 /* GameShareCard.swift */,
+				750F56A1C88655C4FD1C516B /* ShareExporter.swift */,
+				966741CEC272F0DDF1D00CD2 /* SocialShareManager.swift */,
+			);
+			path = Export;
+			sourceTree = "<group>";
+		};
+		4A163EA8E13C20E85D86D981 = {
+			isa = PBXGroup;
+			children = (
+				7F7844C94C00CDF27754AD2F /* GaelicTracker */,
+				3DBD7FE72B97568187491B00 /* GaelicTrackerTests */,
+				C65C9ED27170FE07FC7EF31B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5B7C9882093B81CF2A090074 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7E394D3C7C59F0AE5BE8BC10 /* CardBadgeView.swift */,
+				A33875BD8C48C6A6BA3FE9D9 /* EmptyStateView.swift */,
+				A25802F216E5A7CF9BF5A331 /* ScoreFormatView.swift */,
+				EAF89A0C16066F482A1FC1BF /* ScoreLegendView.swift */,
+				5178D63AC825D6AA95BB8110 /* SocialShareButtons.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		6716236142ACD08D7637114A /* Pitch */ = {
+			isa = PBXGroup;
+			children = (
+				3983F0E49171A4EFA38BE4BB /* LocationPickerSheet.swift */,
+				4FC0B84B8317A794FAF34599 /* PitchShape.swift */,
+				3B915E46D9508A043F8C25AA /* PitchView.swift */,
+			);
+			path = Pitch;
+			sourceTree = "<group>";
+		};
+		7F7844C94C00CDF27754AD2F /* GaelicTracker */ = {
+			isa = PBXGroup;
+			children = (
+				510BFA3155E22D296B2003E1 /* Assets.xcassets */,
+				BCD5FAF16DC43A7A8BEA20E1 /* ContentView.swift */,
+				13B0121FF092E799EFB14DBA /* GaelicTrackerApp.swift */,
+				CBF6341C3F60E9B20ABDCD4F /* Info.plist */,
+				455C195380F9EB67459E4AEA /* Export */,
+				0E269F2DEF74B485B2BB2B81 /* Extensions */,
+				BA992F0405DAEF4E0D23E8EF /* Import */,
+				ECBAA08FC8CBA79E28E43DCB /* Models */,
+				119301BDBACBF409D6872B1C /* Preview Content */,
+				E3926B7E522CF5B88D72AD51 /* ViewModels */,
+				C1CF1DC6E8CBB27FD53A1DD7 /* Views */,
+			);
+			path = GaelicTracker;
+			sourceTree = "<group>";
+		};
+		BA992F0405DAEF4E0D23E8EF /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				D51E0AE4777B16B78426FEC4 /* CSVTeamParser.swift */,
+			);
+			path = Import;
+			sourceTree = "<group>";
+		};
+		C1CF1DC6E8CBB27FD53A1DD7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				03A733E73776645ACE15C08B /* Games */,
+				29F11B952B82108C34A4B133 /* Live */,
+				6716236142ACD08D7637114A /* Pitch */,
+				5B7C9882093B81CF2A090074 /* Shared */,
+				43E52A1E6BD01DA1FCDB5FD5 /* Teams */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C65C9ED27170FE07FC7EF31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				411A779560C0448291C0211A /* GaelicTracker.app */,
+				2AA41ED07186A323E8C4DB32 /* GaelicTrackerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3926B7E522CF5B88D72AD51 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7F11D8A7B9B371BA879E2752 /* GameViewModel.swift */,
+				3275ACF3D6097D2A0FE4FC3A /* LiveGameViewModel.swift */,
+				0EA86604E80DF3B94FD168D5 /* TeamViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		ECBAA08FC8CBA79E28E43DCB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CFD8F659066117CF8C6BE221 /* Enums.swift */,
+				21EB064DE96D5F65E5C88A1D /* Game.swift */,
+				F2B50B10675662A18D7F3DC2 /* GameEvent.swift */,
+				BD504B2DA13D6C4BF4D7C81A /* Player.swift */,
+				0B47A47E341881A4E3425EF1 /* PlayerGameStat.swift */,
+				0F5FA41260CD1218E9AFD96D /* Substitution.swift */,
+				EC1EABECAC24B654F858BBFC /* Team.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		881ADD3A8F5DA17D73D5FF2A /* GaelicTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E638F2C2E17EF30DB1E4E23 /* Build configuration list for PBXNativeTarget "GaelicTrackerTests" */;
+			buildPhases = (
+				A85F94F8D461491D268C2A4C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CB2F4C0662317B4C5553BE9 /* PBXTargetDependency */,
+			);
+			name = GaelicTrackerTests;
+			packageProductDependencies = (
+			);
+			productName = GaelicTrackerTests;
+			productReference = 2AA41ED07186A323E8C4DB32 /* GaelicTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E58DA90D11377FB50C613107 /* GaelicTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4280458E497E0575F87F373 /* Build configuration list for PBXNativeTarget "GaelicTracker" */;
+			buildPhases = (
+				83C83E80AC9499DE18F513C1 /* Sources */,
+				9E1FDCC5576A5F6BB2B9544E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GaelicTracker;
+			packageProductDependencies = (
+			);
+			productName = GaelicTracker;
+			productReference = 411A779560C0448291C0211A /* GaelicTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EAA19E2FA4FE911FF32E2333 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = AE022E635A47522FBB168D71 /* Build configuration list for PBXProject "GaelicTracker" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4A163EA8E13C20E85D86D981;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C65C9ED27170FE07FC7EF31B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E58DA90D11377FB50C613107 /* GaelicTracker */,
+				881ADD3A8F5DA17D73D5FF2A /* GaelicTrackerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9E1FDCC5576A5F6BB2B9544E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C4F65F9B3A9728B94DA87C7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		83C83E80AC9499DE18F513C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2628F70499471A544C0D23B0 /* ActiveRosterView.swift in Sources */,
+				658ECD6B25B61EF5E0B944C9 /* CSVTeamParser.swift in Sources */,
+				828C91DDBC6648ABB3933408 /* CardBadgeView.swift in Sources */,
+				43742BC42B0BEDC37455566B /* ClockView.swift in Sources */,
+				DF8B464462B2956F1B8C3C66 /* Color+Team.swift in Sources */,
+				FA8BE83E8FFBED1FFC1D2499 /* ContentView.swift in Sources */,
+				1E0E6F84D5537A92A2126443 /* Date+GameClock.swift in Sources */,
+				8DF2FA14E623D59161EFA809 /* EmptyStateView.swift in Sources */,
+				9D711EF0EAF003762198FEB3 /* Enums.swift in Sources */,
+				7DEFE69BEE9545BD9B3C85B4 /* EventLogView.swift in Sources */,
+				461A2DB1C9FAA335E6A400C5 /* GaelicTrackerApp.swift in Sources */,
+				136853F35D0B16F8790DD68E /* Game.swift in Sources */,
+				E2657113D0D8F5738613FBA2 /* GameEvent.swift in Sources */,
+				9501F7E7F45153864D58AF39 /* GameSetupView.swift in Sources */,
+				5FF0EE8D6AC1C2A0F0424C4E /* GameShareCard.swift in Sources */,
+				39A889A06CAB3B3B2B5D9DE3 /* GameSummaryView.swift in Sources */,
+				4F5698A4CA980724789F2DBD /* GameViewModel.swift in Sources */,
+				AC41FA84E6476807B6CCBC9F /* GamesListView.swift in Sources */,
+				763EBB49148218833AB6DF59 /* LiveGameView.swift in Sources */,
+				449E73734C2F4DD68EF0CA72 /* LiveGameViewModel.swift in Sources */,
+				B59D61BC08761011A867567D /* LocationPickerSheet.swift in Sources */,
+				C1F9368AC21B24F8BD1A8B40 /* PitchShape.swift in Sources */,
+				09FEB12D2882ECFE71B1F86C /* PitchView.swift in Sources */,
+				E24C4DD142634D296BA95727 /* Player.swift in Sources */,
+				5D8B3A3905637E0AE70F246C /* PlayerFormView.swift in Sources */,
+				3DBD03056E7483501179D81D /* PlayerGameStat.swift in Sources */,
+				28D970D2B48214CC40923CAE /* PlayerListView.swift in Sources */,
+				EAF34B5E52E490FDE1A1C0C1 /* PreviewData.swift in Sources */,
+				A31EFE18535797CA0D5A66A3 /* QuickNumberedTeamSheet.swift in Sources */,
+				A1B8825C84C3B83686CB7AD6 /* ScoreFormatView.swift in Sources */,
+				BB22A79FF580EFFF9381D3F0 /* ScoreLegendView.swift in Sources */,
+				85C4154F84CE6616D52EAB13 /* ScoreboardView.swift in Sources */,
+				3748229EE1D10141ED70A0EC /* ShareExporter.swift in Sources */,
+				7396BAA1A82D062FC6FDF0B7 /* SocialShareButtons.swift in Sources */,
+				303D866877188C5C78341E77 /* SocialShareManager.swift in Sources */,
+				6D9D0306771AE9A1467E412A /* Substitution.swift in Sources */,
+				E6B2D3BF4577A596EC24EAB6 /* SubstitutionSheetView.swift in Sources */,
+				DD1099DEA83B115F3101343B /* Team.swift in Sources */,
+				0034BDB5897A31D79E593AE6 /* TeamDetailView.swift in Sources */,
+				A34B33004639E5E690276AEA /* TeamFormView.swift in Sources */,
+				5275E7CBDB7ACB5BF1212CEF /* TeamImportSheet.swift in Sources */,
+				A6D54B91E019D87E585E613C /* TeamViewModel.swift in Sources */,
+				C237D71EB7A6101265D8092A /* TeamsListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A85F94F8D461491D268C2A4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96990E1F099A216C6F211179 /* ScoreCalculationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9CB2F4C0662317B4C5553BE9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E58DA90D11377FB50C613107 /* GaelicTracker */;
+			targetProxy = 1C83608750DFFFBA204E6AF5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1CC4B4431A3E99896688F7EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaelictracker.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaelicTracker.app/GaelicTracker";
+			};
+			name = Release;
+		};
+		2A4DD0564EAD2A01092C6435 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		4D47FFB3012A2DA753E2ED7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaelictracker.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaelicTracker.app/GaelicTracker";
+			};
+			name = Debug;
+		};
+		9774DA26832F44F0D71D1D0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = GaelicTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaelictracker.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9C1DDE1AB580105A0C469928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		B6B0D5E5D3F5C274B4CE4147 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = GaelicTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaelictracker.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1E638F2C2E17EF30DB1E4E23 /* Build configuration list for PBXNativeTarget "GaelicTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D47FFB3012A2DA753E2ED7E /* Debug */,
+				1CC4B4431A3E99896688F7EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AE022E635A47522FBB168D71 /* Build configuration list for PBXProject "GaelicTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A4DD0564EAD2A01092C6435 /* Debug */,
+				9C1DDE1AB580105A0C469928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4280458E497E0575F87F373 /* Build configuration list for PBXNativeTarget "GaelicTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6B0D5E5D3F5C274B4CE4147 /* Debug */,
+				9774DA26832F44F0D71D1D0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EAA19E2FA4FE911FF32E2333 /* Project object */;
+}
