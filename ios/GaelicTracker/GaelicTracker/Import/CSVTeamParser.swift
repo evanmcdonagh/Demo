@@ -93,7 +93,7 @@ enum CSVTeamParser {
             let row = offset + 2          // human-readable row number
             let cols = split(line)
             guard cols.count >= 2 else {
-                warnings.append("Row \(row): skipped — expected "Name, Number" but got \"\(line)\".")
+                warnings.append("Row \(row): skipped — expected \"Name, Number\" but got \"\(line)\".")
                 continue
             }
 
@@ -104,12 +104,12 @@ enum CSVTeamParser {
             }
 
             guard let number = Int(cols[1]), (1...99).contains(number) else {
-                warnings.append("Row \(row): skipped — "\(cols[1])" is not a valid jersey number (1–99).")
+                warnings.append("Row \(row): skipped — \"\(cols[1])\" is not a valid jersey number (1–99).")
                 continue
             }
 
             if seenNumbers.contains(number) {
-                warnings.append("Row \(row): duplicate jersey #\(number) for "\(playerName)" — skipped.")
+                warnings.append("Row \(row): duplicate jersey #\(number) for \"\(playerName)\" — skipped.")
                 continue
             }
 
