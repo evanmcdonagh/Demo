@@ -44,6 +44,8 @@ enum SocialPlatform: CaseIterable, Identifiable {
         }
     }
 
+    /// Must be called on the main actor because `UIApplication.shared` is main-actor-isolated.
+    @MainActor
     var isAvailable: Bool {
         guard let scheme = urlScheme,
               let url = URL(string: scheme) else { return true }   // system is always available
@@ -79,9 +81,9 @@ enum SocialShareManager {
         let text = tweetText(for: game)
         let encoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
-        // 3. Try X/Twitter app first, fall back to web intent
-        let appURL  = URL(string: "twitter://post?message=\(encoded)")!
-        let webURL  = URL(string: "https://x.com/intent/tweet?text=\(encoded)")!
+        // 3. Try X/Twitter app first (opens compose), fall back to web intent (pre-filled)
+        let appURL = URL(string: "twitter://post")!
+        let webURL = URL(string: "https://x.com/intent/tweet?text=\(encoded)")!
 
         if UIApplication.shared.canOpenURL(appURL) {
             UIApplication.shared.open(appURL)
