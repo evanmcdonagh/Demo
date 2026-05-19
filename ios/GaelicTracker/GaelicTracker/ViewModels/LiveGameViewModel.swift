@@ -33,16 +33,39 @@ final class LiveGameViewModel {
     init(game: Game, context: ModelContext) {
         self.game = game
         self.context = context
-        self.elapsedSeconds = game.clockElapsedSeconds
+        // Restore elapsed time from wall-clock (covers backgrounded / screen-locked state)
+        self.elapsedSeconds = Self.wallClockElapsed(game: game)
         refreshActivePlayers()
+        // If the clock was running when the app was last killed/backgrounded, restart the tick loop
+        if game.clockRunning {
+            isClockRunning = true
+            startTickLoop()
+        }
     }
 
-    // MARK: - Clock
+    // MARK: - Clock (wall-clock based)
+
+    /// Computes the true elapsed seconds using wall-clock arithmetic when the clock is running.
+    private static func wallClockElapsed(game: Game) -> Int {
+        guard game.clockRunning, let startDate = game.clockStartDate else {
+            return game.clockElapsedSeconds
+        }
+        return game.clockBaseSeconds + max(0, Int(Date().timeIntervalSince(startDate)))
+    }
+
+    /// Syncs `elapsedSeconds` from wall-clock. Call on foreground restore or timer tick.
+    func syncFromWallClock() {
+        guard isClockRunning, let startDate = game.clockStartDate else { return }
+        elapsedSeconds = game.clockBaseSeconds + max(0, Int(Date().timeIntervalSince(startDate)))
+        game.clockElapsedSeconds = elapsedSeconds
+    }
 
     func startClock() {
         guard !isClockRunning else { return }
         isClockRunning = true
         game.clockRunning = true
+        game.clockBaseSeconds = elapsedSeconds
+        game.clockStartDate = Date()
 
         if game.status == .notStarted {
             game.status = .firstHalf
@@ -50,24 +73,31 @@ final class LiveGameViewModel {
             game.status = .secondHalf
         }
 
+        startTickLoop()
+        try? context.save()
+    }
+
+    func pauseClock() {
+        syncFromWallClock()
+        isClockRunning = false
+        game.clockRunning = false
+        game.clockStartDate = nil
+        clockTask?.cancel()
+        clockTask = nil
+        try? context.save()
+    }
+
+    private func startTickLoop() {
+        clockTask?.cancel()
         clockTask = Task { [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 guard let self, !Task.isCancelled else { return }
-                self.elapsedSeconds += 1
-                self.game.clockElapsedSeconds = self.elapsedSeconds
+                self.syncFromWallClock()
                 self.checkAndReleaseSinBin()
                 try? self.context.save()
             }
         }
-    }
-
-    func pauseClock() {
-        isClockRunning = false
-        game.clockRunning = false
-        clockTask?.cancel()
-        clockTask = nil
-        try? context.save()
     }
 
     func advanceToHalfTime() {
@@ -79,8 +109,6 @@ final class LiveGameViewModel {
     func endGame() {
         pauseClock()
         game.status = .fullTime
-
-        // Finalise minutes played for all on-field players
         for stat in game.playerStats where stat.isCurrentlyOnField {
             stat.minutesPlayed = (elapsedSeconds - stat.fieldEntrySecond) / 60
         }
@@ -115,22 +143,17 @@ final class LiveGameViewModel {
         context.insert(event)
 
         switch type {
-        case .goal:
-            stat.goals += 1
-        case .point:
-            stat.points += 1
-        case .twoPointer:
-            stat.twoPointers += 1
-        case .freeAwarded:
-            stat.foulsCommitted += 1
-        default:
-            break
+        case .goal:         stat.goals += 1
+        case .point:        stat.points += 1
+        case .twoPointer:   stat.twoPointers += 1
+        case .freeAwarded:  stat.foulsCommitted += 1    // freesWon counter
+        case .freeConceded: stat.freesConceded += 1
+        default: break
         }
 
         pendingEventType = nil
         pendingTeamSide = nil
         pendingPlayerStat = nil
-
         try? context.save()
     }
 
@@ -140,12 +163,13 @@ final class LiveGameViewModel {
         pendingPlayerStat = nil
     }
 
-    // MARK: - Cards (instant, no location picker)
+    // MARK: - Instant events (no location picker)
 
-    func recordCard(_ cardType: EventType, for stat: PlayerGameStat) {
+    /// Records an event that does not require a pitch location (kickout won, cards).
+    func recordInstantEvent(_ type: EventType, for stat: PlayerGameStat) {
         let event = GameEvent(
             clockSeconds: elapsedSeconds,
-            eventType: cardType,
+            eventType: type,
             teamSide: stat.teamSide,
             playerID: stat.playerID,
             playerName: stat.playerName,
@@ -154,12 +178,24 @@ final class LiveGameViewModel {
         game.events.append(event)
         context.insert(event)
 
+        switch type {
+        case .kickoutWon: stat.kickoutsWon += 1
+        default: break
+        }
+        try? context.save()
+    }
+
+    // MARK: - Cards
+
+    func recordCard(_ cardType: EventType, for stat: PlayerGameStat) {
+        recordInstantEvent(cardType, for: stat)
+
         switch cardType {
         case .yellowCard:
             stat.yellowCards += 1
         case .blackCard:
             stat.blackCards += 1
-            sinBinExpiry[stat.playerID] = elapsedSeconds + 600 // 10 minutes
+            sinBinExpiry[stat.playerID] = elapsedSeconds + 600
         case .redCard:
             stat.redCards += 1
             stat.isCurrentlyOnField = false
@@ -168,7 +204,39 @@ final class LiveGameViewModel {
         default:
             break
         }
+        try? context.save()
+    }
 
+    // MARK: - Delete event (undo)
+
+    /// Deletes an event and reverses its contribution to the relevant `PlayerGameStat`.
+    func deleteEvent(_ event: GameEvent) {
+        // Reverse stat contribution
+        if let playerID = event.playerID,
+           let stat = game.playerStats.first(where: {
+               $0.playerID == playerID && $0.teamSide == event.teamSide
+           }) {
+            switch event.eventType {
+            case .goal:         stat.goals         = max(0, stat.goals - 1)
+            case .point:        stat.points        = max(0, stat.points - 1)
+            case .twoPointer:   stat.twoPointers   = max(0, stat.twoPointers - 1)
+            case .freeAwarded:  stat.foulsCommitted = max(0, stat.foulsCommitted - 1)
+            case .freeConceded: stat.freesConceded = max(0, stat.freesConceded - 1)
+            case .kickoutWon:   stat.kickoutsWon   = max(0, stat.kickoutsWon - 1)
+            case .yellowCard:   stat.yellowCards   = max(0, stat.yellowCards - 1)
+            case .blackCard:    stat.blackCards    = max(0, stat.blackCards - 1)
+            case .redCard:
+                stat.redCards = max(0, stat.redCards - 1)
+                // Restore player to field if red-card deletion brings them back
+                if stat.redCards == 0 {
+                    stat.isCurrentlyOnField = true
+                    refreshActivePlayers()
+                }
+            }
+        }
+
+        game.events.removeAll { $0.id == event.id }
+        context.delete(event)
         try? context.save()
     }
 
@@ -184,12 +252,10 @@ final class LiveGameViewModel {
         playerOffStat: PlayerGameStat,
         playerOn: Player
     ) {
-        // Mark player off
         playerOffStat.isCurrentlyOnField = false
         playerOffStat.substitutedOffAtSecond = elapsedSeconds
         playerOffStat.minutesPlayed = (elapsedSeconds - playerOffStat.fieldEntrySecond) / 60
 
-        // Create stat for incoming player
         let newStat = PlayerGameStat(
             playerID: playerOn.id,
             playerName: playerOn.name,
@@ -200,7 +266,6 @@ final class LiveGameViewModel {
         game.playerStats.append(newStat)
         context.insert(newStat)
 
-        // Record substitution
         let sub = Substitution(
             clockSeconds: elapsedSeconds,
             teamSide: teamSide,

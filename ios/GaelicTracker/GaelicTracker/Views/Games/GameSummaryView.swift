@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GameSummaryView: View {
     let game: Game
+    @Environment(\.modelContext) private var context
 
     var body: some View {
         List {
@@ -86,6 +87,24 @@ struct GameSummaryView: View {
                 }
             }
 
+            // Pitch heatmap
+            let locatedEvents = game.sortedEvents.filter { $0.pitchX != nil }
+            if !locatedEvents.isEmpty {
+                Section("Scoring & Foul Locations") {
+                    PitchView(
+                        selectedLocation: .constant(nil),
+                        existingMarkers: locatedEvents,
+                        homeColourHex: game.homeTeamColourHex,
+                        awayColourHex: game.awayTeamColourHex,
+                        isReadOnly: true
+                    )
+                    .listRowInsets(.init())
+                    ScoreLegendView(scopeAll: false)
+                        .listRowInsets(.init())
+                        .listRowBackground(Color.clear)
+                }
+            }
+
             // Event timeline
             Section("Event Timeline") {
                 ScoreLegendView(scopeAll: true)
@@ -93,6 +112,12 @@ struct GameSummaryView: View {
                     .listRowBackground(Color.clear)
                 ForEach(game.sortedEvents) { event in
                     eventRow(event)
+                }
+                .onDelete { indexSet in
+                    let sorted = game.sortedEvents
+                    for i in indexSet {
+                        deleteEvent(sorted[i])
+                    }
                 }
             }
         }
@@ -185,5 +210,30 @@ struct GameSummaryView: View {
         Image(systemName: event.eventType.iconName)
             .foregroundStyle(event.eventType.swiftUIColor)
             .frame(width: 20)
+    }
+
+    // MARK: - Post-match event deletion
+
+    private func deleteEvent(_ event: GameEvent) {
+        // Reverse stat contribution
+        if let playerID = event.playerID,
+           let stat = game.playerStats.first(where: {
+               $0.playerID == playerID && $0.teamSide == event.teamSide
+           }) {
+            switch event.eventType {
+            case .goal:         stat.goals          = max(0, stat.goals - 1)
+            case .point:        stat.points         = max(0, stat.points - 1)
+            case .twoPointer:   stat.twoPointers    = max(0, stat.twoPointers - 1)
+            case .freeAwarded:  stat.foulsCommitted = max(0, stat.foulsCommitted - 1)
+            case .freeConceded: stat.freesConceded  = max(0, stat.freesConceded - 1)
+            case .kickoutWon:   stat.kickoutsWon    = max(0, stat.kickoutsWon - 1)
+            case .yellowCard:   stat.yellowCards    = max(0, stat.yellowCards - 1)
+            case .blackCard:    stat.blackCards     = max(0, stat.blackCards - 1)
+            case .redCard:      stat.redCards       = max(0, stat.redCards - 1)
+            }
+        }
+        game.events.removeAll { $0.id == event.id }
+        context.delete(event)
+        try? context.save()
     }
 }

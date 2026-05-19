@@ -15,7 +15,9 @@ final class PlayerGameStat {
     var yellowCards: Int
     var blackCards: Int
     var redCards: Int
-    var foulsCommitted: Int
+    var foulsCommitted: Int     // legacy field — maps to freesWon below
+    var freesConceded: Int
+    var kickoutsWon: Int
 
     var isCurrentlyOnField: Bool
     var fieldEntrySecond: Int
@@ -49,6 +51,8 @@ final class PlayerGameStat {
         self.blackCards = 0
         self.redCards = 0
         self.foulsCommitted = 0
+        self.freesConceded = 0
+        self.kickoutsWon = 0
         self.isCurrentlyOnField = true
         self.fieldEntrySecond = fieldEntrySecond
         self.minutesPlayed = 0

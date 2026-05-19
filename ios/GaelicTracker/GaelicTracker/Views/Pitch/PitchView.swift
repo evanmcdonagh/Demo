@@ -1,11 +1,13 @@
 import SwiftUI
 
 /// A tap-to-locate pitch view. Stores coordinates normalised to 0.0–1.0.
+/// Pass `isReadOnly: true` to show existing markers without allowing new selections.
 struct PitchView: View {
     @Binding var selectedLocation: CGPoint?
     var existingMarkers: [GameEvent] = []
     var homeColourHex: String = "#1A73E8"
     var awayColourHex: String = "#E8341A"
+    var isReadOnly: Bool = false
 
     var body: some View {
         GeometryReader { geo in
@@ -45,6 +47,7 @@ struct PitchView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture { tap in
+                guard !isReadOnly else { return }
                 selectedLocation = CGPoint(
                     x: tap.x / geo.size.width,
                     y: tap.y / geo.size.height
@@ -56,25 +59,30 @@ struct PitchView: View {
 
     @ViewBuilder
     private func markerView(event: GameEvent) -> some View {
+        let teamColour = Color(hex: event.teamSide == .home ? homeColourHex : awayColourHex)
         let color: Color = {
             switch event.eventType {
-            case .goal: return Color(hex: event.teamSide == .home ? homeColourHex : awayColourHex)
-            case .point: return Color(hex: event.teamSide == .home ? homeColourHex : awayColourHex).opacity(0.7)
-            case .freeAwarded: return .orange
-            default: return .gray
+            case .goal:         return teamColour
+            case .twoPointer:   return .purple
+            case .point:        return teamColour.opacity(0.7)
+            case .freeAwarded:  return .teal
+            case .freeConceded: return .orange
+            default:            return .gray
             }
         }()
         let label: String = {
             switch event.eventType {
-            case .goal: return "G"
-            case .point: return "P"
-            case .freeAwarded: return "F"
-            default: return "?"
+            case .goal:         return "G"
+            case .twoPointer:   return "2"
+            case .point:        return "P"
+            case .freeAwarded:  return "FW"
+            case .freeConceded: return "FC"
+            default:            return "?"
             }
         }()
         ZStack {
-            Circle().fill(color).frame(width: 14, height: 14)
-            Text(label).font(.system(size: 7, weight: .bold)).foregroundStyle(.white)
+            Circle().fill(color).frame(width: 16, height: 16)
+            Text(label).font(.system(size: 6, weight: .bold)).foregroundStyle(.white)
         }
     }
 }

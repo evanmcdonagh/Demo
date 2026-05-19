@@ -6,7 +6,8 @@ struct ActiveRosterView: View {
     let sinBinExpiry: [UUID: Int]
     let elapsedSeconds: Int
     let isGameLive: Bool
-    var onBeginScoring: (EventType, PlayerGameStat) -> Void
+    var onBeginScoring: (EventType, PlayerGameStat) -> Void   // events needing pitch location
+    var onInstantEvent: (EventType, PlayerGameStat) -> Void   // events without pitch location (KO, cards)
     var onCard: (EventType, PlayerGameStat) -> Void
     var onSubstitution: (PlayerGameStat) -> Void
 
@@ -61,23 +62,15 @@ struct ActiveRosterView: View {
             if !inSinBin && !isDisabled {
                 HStack(spacing: 6) {
                     Spacer().frame(width: 28)
-                    actionButton("G", color: .green) {
-                        onBeginScoring(.goal, stat)
-                    }
-                    actionButton("2", color: .purple) {
-                        onBeginScoring(.twoPointer, stat)
-                    }
-                    actionButton("P", color: .blue) {
-                        onBeginScoring(.point, stat)
-                    }
-                    actionButton("F", color: .orange) {
-                        onBeginScoring(.freeAwarded, stat)
-                    }
-                    cardMenu(stat)
+                    // Primary scoring
+                    actionButton("G", color: .green)  { onBeginScoring(.goal, stat) }
+                    actionButton("2", color: .purple)  { onBeginScoring(.twoPointer, stat) }
+                    actionButton("P", color: .blue)    { onBeginScoring(.point, stat) }
+                    // Secondary events + cards menu
+                    eventsMenu(stat)
                     Spacer()
-                    Button {
-                        onSubstitution(stat)
-                    } label: {
+                    // Substitution
+                    Button { onSubstitution(stat) } label: {
                         Image(systemName: "arrow.left.arrow.right")
                             .font(.caption)
                     }
@@ -101,16 +94,37 @@ struct ActiveRosterView: View {
             .tint(color)
     }
 
+    /// Combined menu for non-scoring events and cards.
     @ViewBuilder
-    private func cardMenu(_ stat: PlayerGameStat) -> some View {
+    private func eventsMenu(_ stat: PlayerGameStat) -> some View {
         Menu {
+            // Frees & kickouts
+            Button {
+                onBeginScoring(.freeAwarded, stat)
+            } label: {
+                Label("Free Won", systemImage: EventType.freeAwarded.iconName)
+            }
+            Button {
+                onBeginScoring(.freeConceded, stat)
+            } label: {
+                Label("Free Conceded", systemImage: EventType.freeConceded.iconName)
+            }
+            Button {
+                onInstantEvent(.kickoutWon, stat)
+            } label: {
+                Label("Kickout Won", systemImage: EventType.kickoutWon.iconName)
+            }
+
+            Divider()
+
+            // Cards
             Button("Yellow Card") { onCard(.yellowCard, stat) }
-            Button("Black Card") { onCard(.blackCard, stat) }
+            Button("Black Card")  { onCard(.blackCard, stat) }
             Button("Red Card", role: .destructive) { onCard(.redCard, stat) }
         } label: {
-            Image(systemName: "rectangle.fill")
+            Image(systemName: "ellipsis.circle.fill")
                 .font(.caption)
-                .foregroundStyle(.yellow)
+                .foregroundStyle(.secondary)
         }
         .buttonStyle(.bordered)
         .controlSize(.mini)

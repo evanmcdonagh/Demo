@@ -24,6 +24,10 @@ final class Game {
     var halfDurationMinutes: Int
     var clockElapsedSeconds: Int
     var clockRunning: Bool
+    /// Wall-clock time when the clock was last started; nil when paused.
+    var clockStartDate: Date?
+    /// Snapshot of `clockElapsedSeconds` at the moment the clock was last started.
+    var clockBaseSeconds: Int
 
     @Relationship(deleteRule: .cascade)
     var events: [GameEvent]
@@ -121,6 +125,8 @@ final class Game {
         self.halfDurationMinutes = halfDurationMinutes
         self.clockElapsedSeconds = 0
         self.clockRunning = false
+        self.clockStartDate = nil
+        self.clockBaseSeconds = 0
         self.events = []
         self.substitutions = []
         self.playerStats = []

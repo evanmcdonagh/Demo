@@ -6,6 +6,8 @@ extension EventType {
         case "green":  return .green
         case "blue":   return .blue
         case "purple": return .purple
+        case "teal":   return .teal
+        case "mint":   return .mint
         case "orange": return .orange
         case "yellow": return .yellow
         case "black":  return .primary   // .black renders poorly in dark mode
@@ -22,7 +24,9 @@ struct ScoreLegendView: View {
 
     private var items: [EventType] {
         scopeAll
-            ? [.goal, .twoPointer, .point, .freeAwarded, .yellowCard, .blackCard, .redCard]
+            ? [.goal, .twoPointer, .point,
+               .freeAwarded, .freeConceded, .kickoutWon,
+               .yellowCard, .blackCard, .redCard]
             : [.goal, .twoPointer, .point]
     }
 

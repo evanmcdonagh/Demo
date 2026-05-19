@@ -2,6 +2,8 @@ import SwiftUI
 
 struct EventLogView: View {
     let game: Game
+    /// Optional deletion handler. When provided, events show a swipe-to-delete action.
+    var onDeleteEvent: ((GameEvent) -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -35,6 +37,15 @@ struct EventLogView: View {
                         Text(event.teamSide == .home ? game.homeTeamShortName : game.awayTeamShortName)
                             .font(.caption.bold())
                             .foregroundStyle(Color(hex: event.teamSide == .home ? game.homeTeamColourHex : game.awayTeamColourHex))
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        if let onDelete = onDeleteEvent {
+                            Button(role: .destructive) {
+                                onDelete(event)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
             }

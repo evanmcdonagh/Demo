@@ -46,20 +46,24 @@ enum EventType: String, Codable {
     case goal
     case point
     case twoPointer
-    case freeAwarded
+    case freeAwarded    // free won by this player's team (opponent fouled)
+    case freeConceded   // free given away by this player (this player fouled)
+    case kickoutWon     // player won a kick-out
     case yellowCard
     case blackCard
     case redCard
 
     var displayName: String {
         switch self {
-        case .goal: return "Goal"
-        case .point: return "Point"
-        case .twoPointer: return "Two Pointer"
-        case .freeAwarded: return "Free Awarded"
-        case .yellowCard: return "Yellow Card"
-        case .blackCard: return "Black Card"
-        case .redCard: return "Red Card"
+        case .goal:         return "Goal"
+        case .point:        return "Point"
+        case .twoPointer:   return "Two Pointer"
+        case .freeAwarded:  return "Free Won"
+        case .freeConceded: return "Free Conceded"
+        case .kickoutWon:   return "Kickout Won"
+        case .yellowCard:   return "Yellow Card"
+        case .blackCard:    return "Black Card"
+        case .redCard:      return "Red Card"
         }
     }
 
@@ -67,8 +71,12 @@ enum EventType: String, Codable {
         self == .yellowCard || self == .blackCard || self == .redCard
     }
 
+    /// Whether this event type requires the user to tap a pitch location.
     var needsPitchLocation: Bool {
-        self == .goal || self == .point || self == .twoPointer || self == .freeAwarded
+        switch self {
+        case .goal, .point, .twoPointer, .freeAwarded, .freeConceded: return true
+        default: return false
+        }
     }
 
     var pointValue: Int {
@@ -83,26 +91,30 @@ enum EventType: String, Codable {
     /// SF Symbol name used in event logs and legends.
     var iconName: String {
         switch self {
-        case .goal:        return "sportscourt.fill"
-        case .point:       return "arrow.up.circle.fill"
-        case .twoPointer:  return "2.circle.fill"
-        case .freeAwarded: return "exclamationmark.circle.fill"
-        case .yellowCard:  return "rectangle.fill"
-        case .blackCard:   return "rectangle.fill"
-        case .redCard:     return "rectangle.fill"
+        case .goal:         return "sportscourt.fill"
+        case .point:        return "arrow.up.circle.fill"
+        case .twoPointer:   return "2.circle.fill"
+        case .freeAwarded:  return "hand.thumbsup.fill"
+        case .freeConceded: return "hand.raised.fill"
+        case .kickoutWon:   return "arrow.up.forward.circle.fill"
+        case .yellowCard:   return "rectangle.fill"
+        case .blackCard:    return "rectangle.fill"
+        case .redCard:      return "rectangle.fill"
         }
     }
 
     /// Canonical display colour used in event logs and legends.
     var displayColor: String {
         switch self {
-        case .goal:        return "green"
-        case .point:       return "blue"
-        case .twoPointer:  return "purple"
-        case .freeAwarded: return "orange"
-        case .yellowCard:  return "yellow"
-        case .blackCard:   return "black"
-        case .redCard:     return "red"
+        case .goal:         return "green"
+        case .point:        return "blue"
+        case .twoPointer:   return "purple"
+        case .freeAwarded:  return "teal"
+        case .freeConceded: return "orange"
+        case .kickoutWon:   return "mint"
+        case .yellowCard:   return "yellow"
+        case .blackCard:    return "black"
+        case .redCard:      return "red"
         }
     }
 }

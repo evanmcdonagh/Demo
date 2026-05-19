@@ -3,6 +3,7 @@ import SwiftUI
 struct LiveGameView: View {
     let game: Game
     @Environment(\.modelContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
 
     @State private var viewModel: LiveGameViewModel?
     @State private var showEventLog = false
@@ -39,7 +40,12 @@ struct LiveGameView: View {
             }
         }
         .sheet(isPresented: $showEventLog) {
-            if let vm { EventLogView(game: vm.game) }
+            if let vm {
+                EventLogView(game: vm.game, onDeleteEvent: { vm.deleteEvent($0) })
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { vm?.syncFromWallClock() }
         }
         .navigationDestination(isPresented: $showSummary) {
             GameSummaryView(game: game)
@@ -79,6 +85,9 @@ struct LiveGameView: View {
                         onBeginScoring: { type, stat in
                             vm.beginScoringEvent(type: type, teamSide: .home, player: stat)
                         },
+                        onInstantEvent: { type, stat in
+                            vm.recordInstantEvent(type, for: stat)
+                        },
                         onCard: { type, stat in
                             vm.recordCard(type, for: stat)
                         },
@@ -107,6 +116,9 @@ struct LiveGameView: View {
                         isGameLive: vm.game.status.isLive,
                         onBeginScoring: { type, stat in
                             vm.beginScoringEvent(type: type, teamSide: .away, player: stat)
+                        },
+                        onInstantEvent: { type, stat in
+                            vm.recordInstantEvent(type, for: stat)
                         },
                         onCard: { type, stat in
                             vm.recordCard(type, for: stat)
