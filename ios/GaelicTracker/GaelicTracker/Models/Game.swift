@@ -62,9 +62,43 @@ final class Game {
             .sorted { $0.totalPointValue > $1.totalPointValue }
     }
 
-    init(
+    /// Convenience init for two known `Team` records.
+    convenience init(
         homeTeam: Team,
         awayTeam: Team,
+        venue: String,
+        format: TeamFormat,
+        halfDurationMinutes: Int = 30
+    ) {
+        self.init(
+            homeTeamID: homeTeam.id,
+            homeTeamName: homeTeam.name,
+            homeTeamShortName: homeTeam.shortName,
+            homeTeamColourHex: homeTeam.colourHex,
+            homeTeamCrestData: homeTeam.crestImageData,
+            awayTeamID: awayTeam.id,
+            awayTeamName: awayTeam.name,
+            awayTeamShortName: awayTeam.shortName,
+            awayTeamColourHex: awayTeam.colourHex,
+            awayTeamCrestData: awayTeam.crestImageData,
+            venue: venue,
+            format: format,
+            halfDurationMinutes: halfDurationMinutes
+        )
+    }
+
+    /// Designated init using raw team data — used when one or both sides are guest teams.
+    init(
+        homeTeamID: UUID,
+        homeTeamName: String,
+        homeTeamShortName: String,
+        homeTeamColourHex: String,
+        homeTeamCrestData: Data?,
+        awayTeamID: UUID,
+        awayTeamName: String,
+        awayTeamShortName: String,
+        awayTeamColourHex: String,
+        awayTeamCrestData: Data?,
         venue: String,
         format: TeamFormat,
         halfDurationMinutes: Int = 30
@@ -74,16 +108,16 @@ final class Game {
         self.venue = venue
         self.status = .notStarted
         self.format = format
-        self.homeTeamID = homeTeam.id
-        self.awayTeamID = awayTeam.id
-        self.homeTeamName = homeTeam.name
-        self.awayTeamName = awayTeam.name
-        self.homeTeamShortName = homeTeam.shortName
-        self.awayTeamShortName = awayTeam.shortName
-        self.homeTeamColourHex = homeTeam.colourHex
-        self.awayTeamColourHex = awayTeam.colourHex
-        self.homeTeamCrestData = homeTeam.crestImageData
-        self.awayTeamCrestData = awayTeam.crestImageData
+        self.homeTeamID = homeTeamID
+        self.awayTeamID = awayTeamID
+        self.homeTeamName = homeTeamName
+        self.awayTeamName = awayTeamName
+        self.homeTeamShortName = homeTeamShortName
+        self.awayTeamShortName = awayTeamShortName
+        self.homeTeamColourHex = homeTeamColourHex
+        self.awayTeamColourHex = awayTeamColourHex
+        self.homeTeamCrestData = homeTeamCrestData
+        self.awayTeamCrestData = awayTeamCrestData
         self.halfDurationMinutes = halfDurationMinutes
         self.clockElapsedSeconds = 0
         self.clockRunning = false
