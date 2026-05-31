@@ -7,6 +7,7 @@ final class PlayerGameStat {
     var playerID: UUID
     var playerName: String
     var playerJerseyNumber: Int
+    var playerPosition: GaelicPosition?
     var teamSide: EventTeamSide
 
     var goals: Int
@@ -38,11 +39,14 @@ final class PlayerGameStat {
         return .none
     }
 
-    init(playerID: UUID, playerName: String, playerJerseyNumber: Int, teamSide: EventTeamSide, fieldEntrySecond: Int = 0) {
+    init(playerID: UUID, playerName: String, playerJerseyNumber: Int,
+         playerPosition: GaelicPosition? = nil,
+         teamSide: EventTeamSide, fieldEntrySecond: Int = 0) {
         self.id = UUID()
         self.playerID = playerID
         self.playerName = playerName
         self.playerJerseyNumber = playerJerseyNumber
+        self.playerPosition = playerPosition
         self.teamSide = teamSide
         self.goals = 0
         self.points = 0

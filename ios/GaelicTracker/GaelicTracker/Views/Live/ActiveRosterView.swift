@@ -28,15 +28,22 @@ struct ActiveRosterView: View {
         let isDisabled = !isGameLive || stat.redCards > 0
 
         VStack(alignment: .leading, spacing: 4) {
-            // Name + card badge + score
+            // Name + position + card badge + score
             HStack(spacing: 6) {
                 Text("#\(stat.playerJerseyNumber)")
                     .font(.caption.monospacedDigit().bold())
                     .foregroundStyle(teamColour)
                     .frame(width: 28, alignment: .trailing)
-                Text(stat.playerName)
-                    .font(.subheadline)
-                    .lineLimit(1)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(stat.playerName)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                    if let pos = stat.playerPosition {
+                        Text(pos.abbreviation)
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundStyle(teamColour.opacity(0.75))
+                    }
+                }
                 CardBadgeView(status: stat.currentCardStatus)
                 Spacer()
                 if stat.totalPointValue > 0 {

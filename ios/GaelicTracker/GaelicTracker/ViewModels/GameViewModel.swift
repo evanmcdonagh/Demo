@@ -101,6 +101,7 @@ final class GameViewModel {
                     playerID: player.id,
                     playerName: player.name,
                     playerJerseyNumber: player.jerseyNumber,
+                    playerPosition: player.position,
                     teamSide: side,
                     fieldEntrySecond: 0
                 )
@@ -109,12 +110,13 @@ final class GameViewModel {
             }
 
         case .guest:
-            // Generate numbered placeholder stats #1 through format count
+            // Generate numbered placeholder stats #1 through format count, auto-assigning positions
             for number in 1...format.maxActivePlayers {
                 let stat = PlayerGameStat(
                     playerID: UUID(),
                     playerName: "#\(number)",
                     playerJerseyNumber: number,
+                    playerPosition: GaelicPosition.suggested(for: number),
                     teamSide: side,
                     fieldEntrySecond: 0
                 )

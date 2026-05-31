@@ -31,17 +31,18 @@ final class TeamViewModel {
         try? context.save()
     }
 
-    func addPlayer(to team: Team, name: String, jerseyNumber: Int) {
-        let player = Player(name: name, jerseyNumber: jerseyNumber)
+    func addPlayer(to team: Team, name: String, jerseyNumber: Int, position: GaelicPosition? = nil) {
+        let player = Player(name: name, jerseyNumber: jerseyNumber, position: position)
         player.team = team
         team.players.append(player)
         context.insert(player)
         try? context.save()
     }
 
-    func updatePlayer(_ player: Player, name: String, jerseyNumber: Int) {
+    func updatePlayer(_ player: Player, name: String, jerseyNumber: Int, position: GaelicPosition? = nil) {
         player.name = name
         player.jerseyNumber = jerseyNumber
+        player.position = position
         try? context.save()
     }
 
@@ -91,7 +92,8 @@ final class TeamViewModel {
         team.players = []
 
         for number in 1...team.format.maxActivePlayers {
-            let player = Player(name: "\(number)", jerseyNumber: number)
+            let position = GaelicPosition.suggested(for: number)
+            let player = Player(name: "\(number)", jerseyNumber: number, position: position)
             player.team = team
             team.players.append(player)
             context.insert(player)
