@@ -87,7 +87,7 @@ struct GameSetupView: View {
             Button(action: swapSides) {
                 Label("Swap Home & Away", systemImage: "arrow.up.arrow.down")
                     .frame(maxWidth: .infinity)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
             }
             .disabled(!(homeIsSet && awayIsSet))
 
