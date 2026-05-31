@@ -301,6 +301,52 @@ final class LiveGameViewModel {
         sinBinSecondsRemaining(for: playerID) != nil
     }
 
+    // MARK: - Pre-game lineup editing (notStarted state only)
+
+    /// Updates the match-day jersey number for a player already in the lineup.
+    func updateMatchDayNumber(for stat: PlayerGameStat, to number: Int) {
+        stat.playerJerseyNumber = number
+        refreshActivePlayers()
+        try? context.save()
+    }
+
+    /// Removes a player from the lineup. Only safe before the game starts.
+    func removeFromLineup(_ stat: PlayerGameStat) {
+        game.playerStats.removeAll { $0.id == stat.id }
+        context.delete(stat)
+        refreshActivePlayers()
+        try? context.save()
+    }
+
+    /// Adds a player to the lineup with the given match-day number. Only safe before the game starts.
+    func addToLineup(player: Player, matchDayNumber: Int, side: EventTeamSide) {
+        let stat = PlayerGameStat(
+            playerID: player.id,
+            playerName: player.name,
+            playerJerseyNumber: matchDayNumber,
+            playerPosition: player.position,
+            teamSide: side,
+            fieldEntrySecond: 0
+        )
+        game.playerStats.append(stat)
+        context.insert(stat)
+        refreshActivePlayers()
+        try? context.save()
+    }
+
+    /// Returns the full roster of a team stored in the persistent store.
+    func teamPlayers(for teamID: UUID) -> [Player] {
+        let all = (try? context.fetch(FetchDescriptor<Team>())) ?? []
+        return all.first(where: { $0.id == teamID })?.sortedPlayers ?? []
+    }
+
+    /// Players from the team roster who are not yet in the game lineup.
+    func benchPlayers(side: EventTeamSide) -> [Player] {
+        let teamID = side == .home ? game.homeTeamID : game.awayTeamID
+        let activeIDs = Set(game.playerStats.filter { $0.teamSide == side }.map { $0.playerID })
+        return teamPlayers(for: teamID).filter { !activeIDs.contains($0.id) }
+    }
+
     // MARK: - Roster helpers
 
     func refreshActivePlayers() {

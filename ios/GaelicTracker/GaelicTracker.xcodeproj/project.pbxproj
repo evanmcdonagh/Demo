@@ -35,6 +35,7 @@
 		8DF2FA14E623D59161EFA809 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33875BD8C48C6A6BA3FE9D9 /* EmptyStateView.swift */; };
 		9501F7E7F45153864D58AF39 /* GameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5C6E590202B7C8135AAEC /* GameSetupView.swift */; };
 		96990E1F099A216C6F211179 /* ScoreCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B815153A848E9EFC934FE9 /* ScoreCalculationTests.swift */; };
+		96D74C5AFF88E26587D7FA94 /* PreGameLineupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78581C3302628E9FCAED36C7 /* PreGameLineupView.swift */; };
 		9D711EF0EAF003762198FEB3 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8F659066117CF8C6BE221 /* Enums.swift */; };
 		A1B8825C84C3B83686CB7AD6 /* ScoreFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25802F216E5A7CF9BF5A331 /* ScoreFormatView.swift */; };
 		A31EFE18535797CA0D5A66A3 /* QuickNumberedTeamSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0440B2356656E18F585F8AD /* QuickNumberedTeamSheet.swift */; };
@@ -91,6 +92,7 @@
 		5178D63AC825D6AA95BB8110 /* SocialShareButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialShareButtons.swift; sourceTree = "<group>"; };
 		537052243EE41D8E83D27C83 /* TeamDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailView.swift; sourceTree = "<group>"; };
 		750F56A1C88655C4FD1C516B /* ShareExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExporter.swift; sourceTree = "<group>"; };
+		78581C3302628E9FCAED36C7 /* PreGameLineupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreGameLineupView.swift; sourceTree = "<group>"; };
 		7E394D3C7C59F0AE5BE8BC10 /* CardBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBadgeView.swift; sourceTree = "<group>"; };
 		7EBE0387E3679E6D683E551D /* TeamImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamImportSheet.swift; sourceTree = "<group>"; };
 		7F11D8A7B9B371BA879E2752 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				4EBF6FEB1267B4132450F515 /* ClockView.swift */,
 				049E636178B1B47E776ED802 /* EventLogView.swift */,
 				2FB3B42990B0B9E4182F8B1B /* LiveGameView.swift */,
+				78581C3302628E9FCAED36C7 /* PreGameLineupView.swift */,
 				E627545FAAFC99045ED65C85 /* ScoreboardView.swift */,
 				A6DDC1DC455D2F07B1B8A3B7 /* SubstitutionSheetView.swift */,
 			);
@@ -403,6 +406,7 @@
 				5D8B3A3905637E0AE70F246C /* PlayerFormView.swift in Sources */,
 				3DBD03056E7483501179D81D /* PlayerGameStat.swift in Sources */,
 				28D970D2B48214CC40923CAE /* PlayerListView.swift in Sources */,
+				96D74C5AFF88E26587D7FA94 /* PreGameLineupView.swift in Sources */,
 				EAF34B5E52E490FDE1A1C0C1 /* PreviewData.swift in Sources */,
 				A31EFE18535797CA0D5A66A3 /* QuickNumberedTeamSheet.swift in Sources */,
 				A1B8825C84C3B83686CB7AD6 /* ScoreFormatView.swift in Sources */,

@@ -8,6 +8,7 @@ struct LiveGameView: View {
     @State private var viewModel: LiveGameViewModel?
     @State private var showEventLog = false
     @State private var showSummary = false
+    @State private var showPreGameLineup = false
 
     private var vm: LiveGameViewModel? { viewModel }
 
@@ -26,6 +27,16 @@ struct LiveGameView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(game.status.isLive)
         .toolbar {
+            // Edit lineup (pre-kick-off only)
+            ToolbarItem(placement: .navigationBarLeading) {
+                if game.status == .notStarted {
+                    Button {
+                        showPreGameLineup = true
+                    } label: {
+                        Label("Edit Lineup", systemImage: "person.badge.plus")
+                    }
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack {
                     Button {
@@ -38,6 +49,9 @@ struct LiveGameView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $showPreGameLineup) {
+            if let vm { PreGameLineupView(vm: vm) }
         }
         .sheet(isPresented: $showEventLog) {
             if let vm {

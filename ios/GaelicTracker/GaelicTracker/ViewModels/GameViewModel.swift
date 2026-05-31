@@ -16,7 +16,10 @@ struct GuestTeamInfo {
 // MARK: - Team source
 
 enum TeamSource {
-    case roster(team: Team, startingPlayers: [Player])
+    /// A known team with a chosen starting lineup.
+    /// Each tuple carries the `Player` record and the **match-day jersey number**
+    /// the player will wear in this specific game (may differ from their squad number).
+    case roster(team: Team, startingPlayers: [(player: Player, matchDayNumber: Int)])
     case guest(info: GuestTeamInfo)
 }
 
@@ -95,12 +98,12 @@ final class GameViewModel {
         into game: Game
     ) {
         switch source {
-        case .roster(_, let players):
-            for player in players {
+        case .roster(_, let starting):
+            for (player, matchDayNumber) in starting {
                 let stat = PlayerGameStat(
                     playerID: player.id,
                     playerName: player.name,
-                    playerJerseyNumber: player.jerseyNumber,
+                    playerJerseyNumber: matchDayNumber,   // game-day # may differ from squad #
                     playerPosition: player.position,
                     teamSide: side,
                     fieldEntrySecond: 0

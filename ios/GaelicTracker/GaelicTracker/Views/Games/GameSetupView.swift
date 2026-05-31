@@ -24,9 +24,10 @@ struct GameSetupView: View {
     @State private var selectedFormat: TeamFormat = .fifteens
     @State private var halfDuration = 30
 
-    // Starting lineup
-    @State private var selectedHomePlayers: Set<UUID> = []
-    @State private var selectedAwayPlayers: Set<UUID> = []
+    // Lineup: player ID → match-day jersey number.
+    // Presence in the dictionary means the player is selected for this game.
+    @State private var homeMatchDayNumbers: [UUID: Int] = [:]
+    @State private var awayMatchDayNumbers: [UUID: Int] = [:]
 
     // MARK: - Derived state
 
@@ -35,9 +36,7 @@ struct GameSetupView: View {
 
     private var canProceed: Bool {
         guard homeIsSet && awayIsSet else { return false }
-        // Can't have two guest teams in the same game
         if homeIsGuest && awayIsGuest { return false }
-        // Can't pick the same real team on both sides
         if let h = homeTeam, let a = awayTeam, h.id == a.id { return false }
         return true
     }
@@ -73,17 +72,12 @@ struct GameSetupView: View {
 
     private var teamSection: some View {
         Section {
-            // ── Home ──────────────────────────────────────────────────
             teamSlotView(
-                label: "Home",
-                icon: "house.fill",
-                isGuest: $homeIsGuest,
-                selectedTeam: $homeTeam,
-                guestName: $homeGuestName,
-                excludeTeam: awayTeam
+                label: "Home", icon: "house.fill",
+                isGuest: $homeIsGuest, selectedTeam: $homeTeam,
+                guestName: $homeGuestName, excludeTeam: awayTeam
             )
 
-            // ── Swap button ───────────────────────────────────────────
             Button(action: swapSides) {
                 Label("Swap Home & Away", systemImage: "arrow.up.arrow.down")
                     .frame(maxWidth: .infinity)
@@ -91,14 +85,10 @@ struct GameSetupView: View {
             }
             .disabled(!(homeIsSet && awayIsSet))
 
-            // ── Away ──────────────────────────────────────────────────
             teamSlotView(
-                label: "Away",
-                icon: "mappin.circle.fill",
-                isGuest: $awayIsGuest,
-                selectedTeam: $awayTeam,
-                guestName: $awayGuestName,
-                excludeTeam: homeTeam
+                label: "Away", icon: "mappin.circle.fill",
+                isGuest: $awayIsGuest, selectedTeam: $awayTeam,
+                guestName: $awayGuestName, excludeTeam: homeTeam
             )
         } header: {
             Text("Teams")
@@ -112,14 +102,10 @@ struct GameSetupView: View {
 
     @ViewBuilder
     private func teamSlotView(
-        label: String,
-        icon: String,
-        isGuest: Binding<Bool>,
-        selectedTeam: Binding<Team?>,
-        guestName: Binding<String>,
-        excludeTeam: Team?
+        label: String, icon: String,
+        isGuest: Binding<Bool>, selectedTeam: Binding<Team?>,
+        guestName: Binding<String>, excludeTeam: Team?
     ) -> some View {
-        // Toggle row
         Toggle(isOn: isGuest) {
             Label("\(label) — Guest Team", systemImage: icon)
         }
@@ -128,16 +114,13 @@ struct GameSetupView: View {
         }
 
         if isGuest.wrappedValue {
-            // Guest name field
             HStack {
-                Text("Name")
-                    .foregroundStyle(.secondary)
+                Text("Name").foregroundStyle(.secondary)
                 TextField("e.g. Opponents", text: guestName)
                     .autocorrectionDisabled()
                     .multilineTextAlignment(.trailing)
             }
         } else {
-            // Normal team picker
             Picker(label, selection: selectedTeam) {
                 Text("Select team…").tag(Optional<Team>.none)
                 ForEach(teams.filter { $0.id != excludeTeam?.id }) { team in
@@ -155,6 +138,7 @@ struct GameSetupView: View {
             }
             .onChange(of: selectedTeam.wrappedValue) { _, t in
                 if let t, label == "Home" { selectedFormat = t.format }
+                preselectStartingPlayers()
             }
         }
     }
@@ -165,53 +149,113 @@ struct GameSetupView: View {
         Section("Venue & Format") {
             TextField("Venue", text: $venue)
                 .autocorrectionDisabled()
-
             Picker("Format", selection: $selectedFormat) {
-                ForEach(TeamFormat.allCases, id: \.self) { f in
-                    Text(f.displayName).tag(f)
-                }
+                ForEach(TeamFormat.allCases, id: \.self) { Text($0.displayName).tag($0) }
             }
-
+            .onChange(of: selectedFormat) { _, _ in preselectStartingPlayers() }
             Stepper("Half Duration: \(halfDuration) min", value: $halfDuration, in: 10...45, step: 5)
         }
     }
 
-    // MARK: - Starting lineup section
+    // MARK: - Lineup section
 
     @ViewBuilder
     private var lineupSection: some View {
         if !homeIsGuest {
-            Section("Home Starting \(selectedHomePlayers.count)/\(selectedFormat.maxActivePlayers)") {
+            Section {
                 ForEach(homeSorted) { player in
-                    playerToggle(player: player, selection: $selectedHomePlayers)
+                    playerRows(player: player,
+                               matchDayNumbers: $homeMatchDayNumbers,
+                               maxCount: selectedFormat.maxActivePlayers)
                 }
+            } header: {
+                Text("Home Starting (\(homeMatchDayNumbers.count)/\(selectedFormat.maxActivePlayers))")
+            } footer: {
+                Text("Squad # is shown in grey. Tap + / – to set the match-day # the player will wear in this game.")
+                    .font(.caption)
             }
         }
 
         if !awayIsGuest {
-            Section("Away Starting \(selectedAwayPlayers.count)/\(selectedFormat.maxActivePlayers)") {
+            Section {
                 ForEach(awaySorted) { player in
-                    playerToggle(player: player, selection: $selectedAwayPlayers)
+                    playerRows(player: player,
+                               matchDayNumbers: $awayMatchDayNumbers,
+                               maxCount: selectedFormat.maxActivePlayers)
                 }
+            } header: {
+                Text("Away Starting (\(awayMatchDayNumbers.count)/\(selectedFormat.maxActivePlayers))")
+            } footer: {
+                Text("Squad # is shown in grey. Tap + / – to set the match-day # the player will wear in this game.")
+                    .font(.caption)
             }
         }
     }
 
+    /// Renders up to two rows per player: a selection toggle, and (when selected) a match-day number stepper.
     @ViewBuilder
-    private func playerToggle(player: Player, selection: Binding<Set<UUID>>) -> some View {
+    private func playerRows(
+        player: Player,
+        matchDayNumbers: Binding<[UUID: Int]>,
+        maxCount: Int
+    ) -> some View {
+        let isSelected = matchDayNumbers.wrappedValue[player.id] != nil
+        let matchDayNumber = matchDayNumbers.wrappedValue[player.id] ?? player.jerseyNumber
+
+        // ── Selection toggle ─────────────────────────────────────────────
         Toggle(isOn: Binding(
-            get: { selection.wrappedValue.contains(player.id) },
+            get: { isSelected },
             set: { on in
                 if on {
-                    if selection.wrappedValue.count < selectedFormat.maxActivePlayers {
-                        selection.wrappedValue.insert(player.id)
-                    }
+                    guard matchDayNumbers.wrappedValue.count < maxCount else { return }
+                    matchDayNumbers.wrappedValue[player.id] = player.jerseyNumber
                 } else {
-                    selection.wrappedValue.remove(player.id)
+                    matchDayNumbers.wrappedValue.removeValue(forKey: player.id)
                 }
             }
         )) {
-            Text("#\(player.jerseyNumber) \(player.name)")
+            HStack(spacing: 8) {
+                Text("#\(player.jerseyNumber)")
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                    .frame(width: 28, alignment: .trailing)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(player.name)
+                    if let pos = player.position {
+                        Text(pos.abbreviation)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+
+        // ── Match-day number stepper (only when selected) ────────────────
+        if isSelected {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Match-day jersey #")
+                        .font(.subheadline)
+                    if matchDayNumber != player.jerseyNumber {
+                        Text("Squad # is \(player.jerseyNumber)")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    }
+                }
+                Spacer()
+                Stepper(
+                    value: Binding(
+                        get: { matchDayNumber },
+                        set: { matchDayNumbers.wrappedValue[player.id] = $0 }
+                    ),
+                    in: 1...99
+                ) {
+                    Text("\(matchDayNumber)")
+                        .font(.title3.monospacedDigit().bold())
+                        .frame(minWidth: 36, alignment: .trailing)
+                }
+            }
+            .padding(.leading, 44)
         }
     }
 
@@ -224,46 +268,52 @@ struct GameSetupView: View {
     }
 
     private func swapSides() {
-        // Swap guest flags
-        let tmpGuest = homeIsGuest
-        homeIsGuest = awayIsGuest
-        awayIsGuest = tmpGuest
-        // Swap guest names
-        let tmpName = homeGuestName
-        homeGuestName = awayGuestName
-        awayGuestName = tmpName
-        // Swap real team selections
-        let tmpTeam = homeTeam
-        homeTeam = awayTeam
-        awayTeam = tmpTeam
-        // Swap lineup selections
-        let tmpPlayers = selectedHomePlayers
-        selectedHomePlayers = selectedAwayPlayers
-        selectedAwayPlayers = tmpPlayers
+        swap(&homeIsGuest, &awayIsGuest)
+        swap(&homeGuestName, &awayGuestName)
+        swap(&homeTeam, &awayTeam)
+        swap(&homeMatchDayNumbers, &awayMatchDayNumbers)
     }
 
     private func preselectStartingPlayers() {
-        selectedHomePlayers = Set(homeSorted.prefix(selectedFormat.maxActivePlayers).map(\.id))
-        selectedAwayPlayers = Set(awaySorted.prefix(selectedFormat.maxActivePlayers).map(\.id))
+        homeMatchDayNumbers = Dictionary(
+            uniqueKeysWithValues: homeSorted
+                .prefix(selectedFormat.maxActivePlayers)
+                .map { ($0.id, $0.jerseyNumber) }
+        )
+        awayMatchDayNumbers = Dictionary(
+            uniqueKeysWithValues: awaySorted
+                .prefix(selectedFormat.maxActivePlayers)
+                .map { ($0.id, $0.jerseyNumber) }
+        )
     }
 
-    /// Derives a `GuestTeamInfo` from a raw name string entered by the user.
     private func guestInfo(from rawName: String) -> GuestTeamInfo {
         let name = rawName.trimmingCharacters(in: .whitespaces)
         let safeName = name.isEmpty ? "Guest" : name
         let short = String(safeName.filter { !$0.isWhitespace }.prefix(4)).uppercased()
-        let safeShort = short.isEmpty ? "GST" : short
-        return GuestTeamInfo(name: safeName, shortName: safeShort)
+        return GuestTeamInfo(name: safeName, shortName: short.isEmpty ? "GST" : short)
     }
 
     private func createGame() {
         let homeSource: TeamSource = homeIsGuest
             ? .guest(info: guestInfo(from: homeGuestName))
-            : .roster(team: homeTeam!, startingPlayers: homeSorted.filter { selectedHomePlayers.contains($0.id) })
+            : .roster(
+                team: homeTeam!,
+                startingPlayers: homeSorted.compactMap { player in
+                    guard let num = homeMatchDayNumbers[player.id] else { return nil }
+                    return (player, num)
+                }
+              )
 
         let awaySource: TeamSource = awayIsGuest
             ? .guest(info: guestInfo(from: awayGuestName))
-            : .roster(team: awayTeam!, startingPlayers: awaySorted.filter { selectedAwayPlayers.contains($0.id) })
+            : .roster(
+                team: awayTeam!,
+                startingPlayers: awaySorted.compactMap { player in
+                    guard let num = awayMatchDayNumbers[player.id] else { return nil }
+                    return (player, num)
+                }
+              )
 
         let game = viewModel.createGame(
             home: homeSource,
